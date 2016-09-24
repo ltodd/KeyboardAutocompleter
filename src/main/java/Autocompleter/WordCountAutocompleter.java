@@ -5,6 +5,7 @@ package Autocompleter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -95,4 +96,27 @@ public class WordCountAutocompleter implements Autocompleter {
 	}
 	
 	
+	
+	public static void main(String[] args) {
+		ArrayList<String> passages = new ArrayList();
+		Autocompleter autocompleter = new WordCountAutocompleter();
+
+    	System.out.println("Welcome.  Please choose a command:");
+	    Scanner scanner = new Scanner(System.in);
+		while(true) {
+		    System.out.println("train or auto?");
+		    String command = scanner.nextLine();
+		    if(command.toLowerCase().equals("train")) {
+		    	System.out.println("What should I learn?");
+		    	autocompleter.train(scanner.nextLine());
+		    } else if(command.toLowerCase().equals("auto")) {
+		    	System.out.println("Enter fragment:");
+				List<Candidate> candidates = autocompleter.getWords(scanner.next());
+				scanner.nextLine();
+				System.out.println(candidates);
+		    } else {
+		    	System.out.println("That is not an exceptable command.  Try \"train\" or \"auto\"");
+		    }
+		}
+	}
 }
