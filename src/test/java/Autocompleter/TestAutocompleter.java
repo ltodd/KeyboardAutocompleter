@@ -33,13 +33,17 @@ public class TestAutocompleter {
 		Assert.assertTrue(!checkCandidacy(candidates, "thoroughly."));
 		
 		//test multi args
-		passages.add("Hello, my name is... Hi, my name is. Who? My name is (chicka chicka) Slim Shady!");
+		passages.add("Hello, my name is... Hi, my name is.\n Who? My\n name is (chicka chicka) Slim Shady!\n Here's a contraction");
 		autocompleter = new WordCountAutocompleter();
 		autocompleter.train(passages.toArray(new String[passages.size()]));
 		candidates = autocompleter.getWords("i");
 		Assert.assertTrue(checkAllPassages(passages, candidates));
 		Assert.assertTrue(checkConfidence(candidates, "is", 4));
 		Assert.assertTrue(!checkCandidacy(candidates, "is."));
+		
+		//test contraction
+		candidates = autocompleter.getWords("he");
+		Assert.assertTrue(checkConfidence(candidates, "here's", 1));
 		
 		//test update
 		String h = "Hi HI hi, hI hi-hi.";
